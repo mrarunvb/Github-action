@@ -27,9 +27,11 @@ jobs:
         host: ${{ secrets.EC2_IP }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "target/*.war"  # Changed from "target/myjsapp.war"
-        target: "/tmp/"
-        rm: true
+        source: "target/myjsapp.war"
+        target: "/home/ec2-user/"
+        strip_components: 1
+        rm: false
+        timeout-minutes: 5
         
         
     - name: Deploy and Restart Tomcat
@@ -39,5 +41,6 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          sudo mv /tmp/myjsapp.war /opt/tomcat/webapps/
+          sudo mv /home/ec2-user/myjsapp.war /opt/tomcat/webapps/
+          sudo chown tomcat:tomcat /opt/tomcat/webapps/myjsapp.war
           echo "Deployment completed successfully!"
