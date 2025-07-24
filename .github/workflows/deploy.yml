@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         source: "target/myjsapp.war"
-        target: "/tmp/"
+        
         rm: true
         
     - name: Deploy and Restart Tomcat
