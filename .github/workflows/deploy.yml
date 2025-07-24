@@ -22,13 +22,14 @@ jobs:
       run: mvn clean package
       
     - name: Deploy WAR to EC2
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.EC2_IP }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        source: "target/myjsapp.war"
-        target: "/tmp/"
+  uses: appleboy/scp-action@v0.1.4
+  with:
+    host: ${{ secrets.EC2_IP }}
+    username: ${{ secrets.EC2_USER }}
+    key: ${{ secrets.EC2_SSH_KEY }}
+    source: "target/*.war"  # Changed from "target/myjsapp.war"
+    target: "/tmp/"
+    rm: true
         
         
     - name: Deploy and Restart Tomcat
